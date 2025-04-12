@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   list-style: none;
+  
 }
 
 body {
@@ -28,10 +29,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30rem;
+  flex: 1;
 }
 
-a img {
+.ham-menu {
   width: 2rem;
   display: none;
 }
@@ -68,20 +69,22 @@ a {
 }
 
 
-.img1 {
-  display: block;
+.shortly-img {
+  display: none;
 }
 
 .img2 {
   display: block;
-  margin-bottom: 50px;
-  padding-left: 3.5rem;
-  padding-top: 3rem;
+ 
 }
 
 .major-div {
   display: flex;
   flex-direction: row-reverse;
+  justify-content: space-evenly;
+  /* flex-wrap: wrap; */
+  margin-bottom: 5rem;
+
 }
 
 .btn {
@@ -127,8 +130,19 @@ h1 {
 }
 
 .header-container {
-  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 40rem;
 }
+
+.header-container p{
+    font-size: medium;
+    word-wrap: break-word;
+    max-width: 25rem;
+  }
+
 
 main {
   background-color: #f0f1f6;
@@ -140,11 +154,10 @@ form {
   width: 64%;
   background-image: url("/img/bg-shorten-desktop.svg");
   background-size: cover;
-  background-color: #3a3053;
+  background-color: #312b41;
   display: flex;
-  place-content: center;
+  align-items: center;
   justify-content: space-evenly;
-  /* place-self: center;  */
   padding: 30px;
   position: relative;
   top: -65px;
@@ -154,7 +167,7 @@ form {
 .form-container {
   display: flex;
   flex-wrap: wrap;
-  place-content: center;
+  align-items: center;
   justify-content: space-evenly;
 }
 
@@ -163,6 +176,10 @@ input {
   padding: 1rem 0 1rem 1rem;
   border: none;
   border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
 h2 {
@@ -280,6 +297,10 @@ footer {
   gap: 20rem;
 }
 
+
+
+
+
 h5 {
   font-size: xx-large;
   color: #f0f1f6;
@@ -315,29 +336,34 @@ footer nav ul li:first-child {
 
 
 
-.short-link {
-  color: pink;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+
 
 
 @media screen and (max-width: 44rem) {
   header {
     display: flex;
-    position: relative;
     margin-top: 20px;
+    padding-inline: 2rem;
+    
   }
 
   .header-nav {
     display: none;
   }
 
+  .img2 {
+    margin: 0;
+    /* padding: 5rem; */
+    max-width: 30rem;
+    height: 30rem;
+    position: relative;
+  }
+
   .header-nav.active {
-    position: fixed;
-    right: 10rem;
-    top: 6rem;
+    position: absolute;
+    top: 17%;
+    left: 10%;
+    translate: (-50% -50%);
     width: 24rem;
     min-height: 27rem;
     border-radius: 15px;
@@ -345,18 +371,24 @@ footer nav ul li:first-child {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    gap: 3rem;
-    transition: .6s ease;
+    align-items: center;
+    transition: 0.6s ease;
     z-index: 100;
-  }
+    
+}
 
   .ham-menu {
-    position: absolute;
-    left: 600px;
-    top: -1px;
+    display: block;
+    float: right;
     transition: 0.5s ease;
     transform: rotate(180deg);
-  }
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -ms-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+}
+
+
 
   .ham-menu.active {
     transform: rotate(360deg);
@@ -367,6 +399,10 @@ footer nav ul li:first-child {
     -o-transform: rotate(360deg);
   }
 
+  .shortly-img {
+  display: block;
+}
+
   .one {
     display: flex;
     flex-direction: column;
@@ -375,7 +411,7 @@ footer nav ul li:first-child {
   }
 
   .two {
-    border-top: 1px solid #f0f1f6;
+    border-top: 1px solid #544a6d;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -394,16 +430,11 @@ footer nav ul li:first-child {
     color: #f0f1f6;
   }
 
-  a img {
-    width: 2rem;
-    display: block;
-    margin-top: 1rem;
-    margin-right: 1rem;
+  .img1{
+    display: none;
   }
 
-  .img2 {
-    margin: 0;
-  }
+  
 
   .major-div {
     display: flex;
@@ -412,7 +443,7 @@ footer nav ul li:first-child {
   }
 
   h1 {
-    font-size: 5rem;
+
     text-align: center;
     color: #34313c;
   }
@@ -440,15 +471,17 @@ footer nav ul li:first-child {
   }
 
   .header-container {
-    place-items: center;
-    text-align: center;
-    margin-top: 10rem;
+     display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   }
 
-  .header-text {
+   .header-container p{
     font-size: medium;
     text-align: center;
     word-wrap: break-word;
+    max-width: 19rem;
   }
 
   form {
@@ -556,6 +589,15 @@ footer nav ul li:first-child {
   footer nav ul li:first-child {
     margin-bottom: 0.8em;
   }
+
+  .footer-icon{
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+  
+}
 
 }
 

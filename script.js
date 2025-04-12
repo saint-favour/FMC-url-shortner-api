@@ -1,8 +1,4 @@
-const urlInput = document.querySelector("#url-input");
-const errorMessageEl = document.getElementById("error-message");
-const activeBtn = document.getElementById("active-btn");
-const linkHistoryEl = document.getElementById("link-history");
-
+// header stuff
 const hamMenu = document.querySelector(".ham-menu");
 const headerNav = document.querySelector(".header-nav");
 
@@ -11,93 +7,64 @@ hamMenu.addEventListener("click", () => {
   headerNav.classList.toggle("active");
 });
 
+// url stuff
+// collecting a link
+// get the input field itself - DOM traversal
+const input = document.querySelector("#url-input");
+const button = document.querySelector("#active-btn");
+const error = document.querySelector("#error-message");
 
-// 1. check for validation
-urlInput.addEventListener("change", () => {
-  urlInputValue = urlInput.value;
-  if(urlInputValue = ''){
-    return console.log('no url')
-  }else{
-    console.log('success')
+// get url from input field
+button.addEventListener("click", onSubmit);
+function onSubmit() {
+  const url = input.value;
+  // validate the link
+  const isValid = validateLink(url);
+  if (isValid) {
+    error.classList.add("hidden");
+    // shorten the link
+    fetch(
+      "https://cors-anywhere.herokuapp.com/https://cleanuri.com/api/v1/shorten",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          url: url,
+        }),
+      }
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Something went wrong");
+        }
+      })
+      .then((data) => {
+        const parsedData = JSON.parse(data);
+        const shortenedLink = parsedData.result_url;
+        // return the shortened link
+        console.log(shortenedLink);
+      })
+      .catch((err) => {
+        error.textContent = err.message;
+        error.classList.remove("hidden");
+      });
+  } else {
+    error.textContent = "Please enter a valid link";
+    error.classList.remove("hidden");
   }
-});
-
-/*
-const getUrlInput = () => {
-    return urlInput.trim().toLocaleLowerCase()
 }
 
-async function shortenUrl(urlLink){
-    const apiUrl = `https://cors-anywhere.herokuapp.com/https://cleanuri.com/api/v1/shorten`
+function validateLink(link) {
+  const urlPattern =
+    /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
-    const res = await fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/x-www.form-urlencoded'
-        },
-        body: new URLSearchParams({
-            'url': urlLink
-        })
-    })
-
-    if(res.ok){
-        const data = await res.json()
-        displayToLinksHistory(urlLink, data)
-    }else {
-        console.error(`Error shortening URL: ${res.statusText}`)
-    }
+  if (link !== "" && link.match(urlPattern)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
-const isValidUrl = (url) => {
-    try{
-        new URL(url)
-        return true
-    } catch (_) {
-        return false
-    }
-}
-
-const displayToLinksHistory = (originalLink,  urlData) =>{
-    const linkItem = document.createElement('div')
-    linkItem.classList.add('item')
-
-    linkItem.innerHTML = `
-    <p class='link'>${originalLink}</p>
-    <hr/>
-
-    <div class="short-link">
-    <p>${urlData.result_url}</p>
-    <button class='copy-link-btn'>Copy</button>
-    </div>
-    `
-
-    linkHistoryEl.appendChild(linkItem)
-
-    linkItem.querySelector('.copy-link-btn').addEventListener('click', (e) =>{
-        let copyUrl = urlData.result_url
-        navigator.clipboard.writeText(copyUrl) 
-
-        e.target.style.backgroundColor = 'pink'
-        e.target.textContent = 'Copied!'
-
-        setTimeout(() => {
-            e.target.style.backgroundColor = 'blue'
-            e.target.textContent = 'Copy'
-        }, 1500);
-    })
-}
-
-activeBtn.addEventListener('click', () => {
-    userUrl = getUrlInput()
-
-    if (userUrl || !isValidUrl(userUrl)) {
-        errorMessageEl.classList.add('error')
-        urlInput.classList.remove('error')  
-    }else{
-        errorMessageEl.classList.remove('error')
-        urlInput.classList.remove('error')
-        urlInput.value = ""
-        linkHistoryEl.classList.add('active')
-        shortenUrl(userUrl)
-    }
-})*/
+// save to local storage
+// copying to clipboard

@@ -1,26 +1,30 @@
-
-
-
-const urlInput = document.getElementById("url-input");
+const urlInput = document.querySelector("#url-input");
 const errorMessageEl = document.getElementById("error-message");
 const activeBtn = document.getElementById("active-btn");
 const linkHistoryEl = document.getElementById("link-history");
 
-const hamMenu = document.querySelector('.ham-menu');
+const hamMenu = document.querySelector(".ham-menu");
 const headerNav = document.querySelector(".header-nav");
 
-
-hamMenu.addEventListener('click', () => {
-    hamMenu.classList.toggle("active")
-    headerNav.classList.toggle("active");
-})
-
+hamMenu.addEventListener("click", () => {
+  hamMenu.classList.toggle("active");
+  headerNav.classList.toggle("active");
+});
 
 
+// 1. check for validation
+urlInput.addEventListener("change", () => {
+  urlInputValue = urlInput.value;
+  if(urlInputValue = ''){
+    return console.log('no url')
+  }else{
+    console.log('success')
+  }
+});
 
-// form layout
+/*
 const getUrlInput = () => {
-    return urlInput.ariaValueMax.trim().toLocaleLowerCase()
+    return urlInput.trim().toLocaleLowerCase()
 }
 
 async function shortenUrl(urlLink){
@@ -96,4 +100,4 @@ activeBtn.addEventListener('click', () => {
         linkHistoryEl.classList.add('active')
         shortenUrl(userUrl)
     }
-})
+})*/

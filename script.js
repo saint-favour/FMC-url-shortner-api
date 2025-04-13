@@ -47,7 +47,6 @@ function onSubmit() {
         console.log(shortenedLink);
         displayLink.textContent = shortenedLink;
 
-
         // local storage
         localStorage.setItem("shortenUrl", JSON.stringify(shortenedLink));
         console.log(JSON.parse(localStorage.getItem("shortenUrl")));

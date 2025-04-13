@@ -13,6 +13,7 @@ hamMenu.addEventListener("click", () => {
 const input = document.querySelector("#url-input");
 const button = document.querySelector("#active-btn");
 const error = document.querySelector("#error-message");
+const displayLink = document.querySelector("#link-message");
 
 // get url from input field
 button.addEventListener("click", onSubmit);
@@ -23,15 +24,15 @@ function onSubmit() {
   if (isValid) {
     error.classList.add("hidden");
     // shorten the link
-    fetch(
-      "https://cors-anywhere.herokuapp.com/https://cleanuri.com/api/v1/shorten",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          url: url,
-        }),
-      }
-    )
+    fetch("https://ulvis.net/api/v1/shorten", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        url: url,
+      }),
+    })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -44,6 +45,12 @@ function onSubmit() {
         const shortenedLink = parsedData.result_url;
         // return the shortened link
         console.log(shortenedLink);
+        displayLink.textContent = shortenedLink;
+
+
+        // local storage
+        localStorage.setItem("shortenUrl", JSON.stringify(shortenedLink));
+        console.log(JSON.parse(localStorage.getItem("shortenUrl")));
       })
       .catch((err) => {
         error.textContent = err.message;
@@ -67,4 +74,5 @@ function validateLink(link) {
 }
 
 // save to local storage
+
 // copying to clipboard
